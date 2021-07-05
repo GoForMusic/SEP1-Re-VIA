@@ -1,0 +1,47 @@
+.tab{
+    -fx-background-color: #343a40;
+    -fx-text-base-color: rgb(255, 255, 255);
+}
+
+.tab:hover{
+    -fx-background-color: rgba(15, 106, 167, 0.4);
+}
+
+.tab-header-background{
+    -fx-background-color: #343a40;
+}
+
+.tab:selected{
+    -fx-background-color: rgba(120,180,220,.4);
+}
+
+.button{
+    -fx-background-color: #343a40;
+    -fx-text-base-color: rgb(255, 255, 255);
+}
+
+.button:hover{
+    -fx-background-color: rgba(15, 106, 167, 0.4);
+}
+
+.button:selected{
+    -fx-background-color: rgba(120,180,220,.4);
+}
+
+.buttonRed{
+    -fx-background-color: #cf0516;
+    -fx-text-base-color: rgb(255, 255, 255);
+}
+
+.buttonRed:hover{
+    -fx-background-color: rgb(255, 0, 0);
+}
+
+.buttonGreen{
+    -fx-background-color: #1eaf01;
+    -fx-text-base-color: rgb(255, 255, 255);
+}
+
+.buttonGreen:hover{
+    -fx-background-color: rgb(49, 247, 0);
+}
