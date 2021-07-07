@@ -1,5 +1,11 @@
 package View;
 
+import Model.Article;
+import Model.Book;
+import Model.Item;
+import Model.Media;
+import Utils.FairyTaleModelManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -7,6 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.sql.Array;
+import java.util.ArrayList;
 
 public class FairyTaleGUIController {
     @FXML private DialogPane addItemPanel;
@@ -20,14 +28,18 @@ public class FairyTaleGUIController {
     @FXML private AnchorPane tabArticles;
     @FXML private AnchorPane tabCDs;
     @FXML private AnchorPane tabDVDs;
+    @FXML private TextField itemTitle;
+    @FXML private TextField itemAuthor;
+
+    private FairyTaleModelManager manager;
 
     /**
      * This method will initialize the data when the interface was open.
      * */
      public void initialize() throws IOException {
-        initializeTabs();
+         manager = new FairyTaleModelManager("items.bin","items.txt");
+         initializeTabs();
         mediaType.getItems().addAll("Book","Article","CD/DVD");
-        mediaType.getSelectionModel().selectFirst();
         mediaCDType.getItems().addAll("CD","DV");
         mediaCDType.getSelectionModel().selectFirst();
         mediaNewMedia.getItems().addAll("Yes","No");
@@ -48,7 +60,6 @@ public class FairyTaleGUIController {
 
     @FXML void addItem(MouseEvent event) {
         addItemPanel.setVisible(true);
-
     }
 
     @FXML
@@ -63,7 +74,62 @@ public class FairyTaleGUIController {
     }
 
     @FXML
-    void storeNewItem(MouseEvent event) {
+    void storeNewItem(MouseEvent event) throws IOException {
+
+       if(itemTitle.getText().isEmpty()&&itemAuthor.getText().isEmpty()){
+           Alert alert = new Alert(Alert.AlertType.ERROR, "All fields must be filled!");
+           alert.showAndWait();
+       }
+        else {
+
+           if (mediaType.getValue().equals("Book")) {
+               Item item = new Book(itemTitle.getText(), itemAuthor.getText(), typeOfItemTextFieldVariable.getText());
+               manager.saveItem(item);
+           } else if (mediaType.getValue().equals("Article")) {
+               Item item = new Article(itemTitle.getText(), itemAuthor.getText(), typeOfItemTextFieldVariable.getText());
+               manager.saveItem(item);
+           } else if (mediaType.getValue().equals("CD/DVD")) {
+               boolean localBool;
+               if (mediaNewMedia.getValue().equals("Yes")) localBool = true;
+               else localBool = false;
+               Item item = new Media(itemTitle.getText(), itemAuthor.getText(), mediaCDType.getValue(), localBool);
+               manager.saveItem(item);
+           }
+           Alert alert = new Alert(Alert.AlertType.INFORMATION, "The item has been added!");
+           alert.showAndWait();
+           cancelNewItemProcess(event);
+           initializeTabs();
+       }
+    }
+
+    @FXML
+    private void comboAction(ActionEvent event) {
+
+        if(mediaType.getValue().equals("Book"))
+        {
+            typeOfItemLabelVarialbe.setText("ISBN:");
+            typeOfItemLabelVarialbe.setVisible(true);
+            typeOfItemTextFieldVariable.setVisible(true);
+            mediaCDType.setVisible(false);
+            mediaNewMedia.setVisible(false);
+            mediaCDDVD.setVisible(false);
+        }else if(mediaType.getValue().equals("Article"))
+        {
+            typeOfItemLabelVarialbe.setText("Magazine:");
+            typeOfItemLabelVarialbe.setVisible(true);
+            typeOfItemTextFieldVariable.setVisible(true);
+            mediaCDType.setVisible(false);
+            mediaNewMedia.setVisible(false);
+            mediaCDDVD.setVisible(false);
+        }else if(mediaType.getValue().equals("CD/DVD"))
+        {
+            typeOfItemLabelVarialbe.setText("Media CD/DVD:");
+            typeOfItemLabelVarialbe.setVisible(true);
+            mediaCDType.setVisible(true);
+            mediaCDDVD.setVisible(true);
+            mediaNewMedia.setVisible(true);
+            typeOfItemTextFieldVariable.setVisible(false);
+        }
 
     }
 }

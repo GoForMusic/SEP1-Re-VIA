@@ -91,14 +91,14 @@
                                     <Font size="15.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="153.0" layoutY="40.0" />
+                              <TextField fx:id="itemTitle" layoutX="153.0" layoutY="40.0" />
                               <Label fx:id="mediaCDDVD" layoutX="31.0" layoutY="196.0" prefHeight="28.0" prefWidth="111.0" text="New CD/DVD :" textFill="WHITE" visible="false">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="153.0" layoutY="82.0" />
-                              <ComboBox fx:id="mediaType" layoutX="153.0" layoutY="126.0" prefHeight="24.0" prefWidth="170.0" />
+                              <TextField fx:id="itemAuthor" layoutX="153.0" layoutY="82.0" />
+                              <ComboBox fx:id="mediaType" layoutX="153.0" layoutY="126.0" onAction="#comboAction" prefHeight="24.0" prefWidth="170.0" />
                               <ComboBox fx:id="mediaCDType" layoutX="153.0" layoutY="162.0" prefHeight="24.0" prefWidth="172.0" visible="false" />
                               <ComboBox fx:id="mediaNewMedia" layoutX="153.0" layoutY="198.0" prefHeight="24.0" prefWidth="173.0" visible="false" />
                               <TextField fx:id="typeOfItemTextFieldVariable" layoutX="153.0" layoutY="162.0" visible="false" />

@@ -36,7 +36,6 @@ public class BookGUIController {
     private FairyTaleModelManager manager;
     private ArrayList<Item> items;
     private int itemIndex;
-    private Instant LocalData;
 
 
     public void initialize()
@@ -100,48 +99,62 @@ public class BookGUIController {
     private void refreshCustomerList(Item item)
     {
         customersAssign.getItems().clear();
+        customersExceeded.getItems().clear();
 
         for(Person person:item.getPersonList())
         {
-            HBox hBox = new HBox();
-            //add the item title and author as well the specific details
-            Label label = new Label(person.getFirstName() +" "+person.getLastName()+" | email: "+ person.getEmail()+"\n Type of customer: " + person.getType()+" | Type of Action: "+person.getTypeOfAction()+"\n Returning date on: "+person.getReturningDate());
-            hBox.getChildren().add(label);
-
-            //add Remove button
-            Button removeButton = new Button("Remove");
-            removeButton.getStyleClass().add("buttonRed");
-            //remove customer button event handler using lambda method
-            removeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent)->{
-
-                //Ask for a confirmation to delete the customer, if the OK button was pressed the deletion process can start and save into file
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the assigned customer\n("+person.getFirstName()+" "+person.getLastName()+") from the system?");
-                Optional<ButtonType> result = alert.showAndWait();
-                if(result.get()== ButtonType.OK)
-                {
-                    item.removeAPerson(person);
-                    refreshCustomerList(item);
-                }
-
-            });
-
-            //Add a little space between customer details and remove button
-            HBox.setMargin(removeButton,new Insets(0,0,0,20));
-            hBox.getChildren().addAll(removeButton);
-            customersAssign.getItems().add(hBox);
+            customerGenerateList(person,item, customersAssign);
+            if(person.getReturningDate().isBefore(MyDate.today()))
+                customerGenerateList(person,item,customersExceeded);
         }
+    }
+
+    private void customerGenerateList(Person person,Item item, ListView<HBox>  customerList)
+    {
+        HBox hBox = new HBox();
+        //add the item title and author as well the specific details
+        Label label = new Label(person.getFirstName() +" "+person.getLastName()+" | email: "+ person.getEmail()+"\n Type of customer: " + person.getType()+" | Type of Action: "+person.getTypeOfAction()+"\n Returning date on: "+person.getReturningDate());
+        hBox.getChildren().add(label);
+
+        //add Remove button
+        Button removeButton = new Button("Remove");
+        removeButton.getStyleClass().add("buttonRed");
+        //remove customer button event handler using lambda method
+        removeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent)-> {
+            //Ask for a confirmation to delete the customer, if the OK button was pressed the deletion process can start and save into file
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the assigned customer\n(" + person.getFirstName() + " " + person.getLastName() + ") from the system?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                item.removeAPerson(person);
+                refreshCustomerList(item);
+            }
+
+        });
+
+        //Add a little space between customer details and remove button
+        HBox.setMargin(removeButton,new Insets(0,0,0,20));
+        hBox.getChildren().addAll(removeButton);
+        customerList.getItems().add(hBox);
+
     }
 
     @FXML
     void assignCustomer(MouseEvent event) {
-        MyDate localDate = new MyDate(customerDate.getValue().getDayOfMonth(),customerDate.getValue().getMonthValue(),customerDate.getValue().getDayOfYear());
-        Person localPerson = new Person(customerFirstName.getText(),customerLastName.getText(),customerEmail.getText(),customerType.getValue());
-        Item localItem = items.get(itemIndex);
-        localPerson.setTypeOfAction(customerTypeOfAction.getValue());
-        localPerson.setReturningDate(localDate);
-        localItem.assignAPerson(localPerson);
-        refreshCustomerList(localItem);
-
+        if(customerEmail.getText().isEmpty()&&customerFirstName.getText().isEmpty()&&customerLastName.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "All fields must be filled!");
+            alert.showAndWait();
+        }else {
+            MyDate localDate = new MyDate(customerDate.getValue().getDayOfMonth(), customerDate.getValue().getMonthValue(), customerDate.getValue().getDayOfYear());
+            Person localPerson = new Person(customerFirstName.getText(), customerLastName.getText(), customerEmail.getText(), customerType.getValue());
+            Item localItem = items.get(itemIndex);
+            localPerson.setTypeOfAction(customerTypeOfAction.getValue());
+            localPerson.setReturningDate(localDate);
+            localItem.assignAPerson(localPerson);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The customer has been added to the item!");
+            alert.showAndWait();
+            manager.editItem(localItem,itemIndex);
+            refreshCustomerList(localItem);
+        }
     }
 
     @FXML
@@ -151,16 +164,23 @@ public class BookGUIController {
 
     @FXML
     void saveProcess(MouseEvent event) {
-        Item item = new Book(labelBookTitle.getText(),labelBookAuthor.getText(),labelBookISBN.getText());
 
-        //edit the object on the specific index who will be stored in the lambda function
-        manager.editItem(item,itemIndex);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "The book new details has been saved!");
-        alert.showAndWait();
-        dialogPop.setVisible(false);
-        //update the book list with the new changes
-        setListDetails(manager.getAllItemsBook());
-        cancelProcess(event);
+        if(labelBookTitle.getText().isEmpty()&&labelBookAuthor.getText().isEmpty()&&labelBookISBN.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR, "All fields must be filled!");
+            alert.showAndWait();
+        }else {
+
+            Item item = new Book(labelBookTitle.getText(), labelBookAuthor.getText(), labelBookISBN.getText());
+
+            //edit the object on the specific index who will be stored in the lambda function
+            manager.editItem(item, itemIndex);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The book new details has been saved!");
+            alert.showAndWait();
+            dialogPop.setVisible(false);
+            //update the book list with the new changes
+            setListDetails(manager.getAllItemsBook());
+            cancelProcess(event);
+        }
     }
 
 }

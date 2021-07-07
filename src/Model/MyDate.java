@@ -131,6 +131,38 @@ public class MyDate implements Serializable
     }
 
     /**
+     * Check if the current DateTime object is before another DateTime object
+     *
+     * @param date2 the DateTime object to compare against
+     * @return true if the current DateTime object is before the other DateTime object, false otherwise
+     */
+    public boolean isBefore(MyDate date2)
+    {
+        boolean ok = false;
+        if (year < date2.year)
+            ok = true;
+        if (year == date2.year)
+        {
+            if (month < date2.month)
+            {
+                ok = true;
+            }
+            if (month == date2.month)
+            {
+                if (day < date2.day)
+                {
+                    ok = true;
+                }
+                if (day == date2.day)
+                {
+                   ok=false;
+                }
+            }
+        }
+        return ok;
+    }
+
+    /**
      * A method that will made a copy of the date
      * @return the copy of a date
      */
