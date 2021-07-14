@@ -16,11 +16,11 @@ public abstract class Item implements Serializable {
     }
 
     public String getTitle() {
-        return "Title: "+this.title;
+        return this.title;
     }
 
     public String getAuthor() {
-        return "Author: "+this.author;
+        return this.author;
     }
 
     public void setTitle(String title) {
@@ -57,7 +57,7 @@ public abstract class Item implements Serializable {
 
         Item item = (Item) obj;
 
-        if(item.title.equals(this.title)&&this.author.equals(item.author))return true;
+        if(item.title.equals(this.title)&&item.author.equals(this.author))return true;
         else return false;
     }
 

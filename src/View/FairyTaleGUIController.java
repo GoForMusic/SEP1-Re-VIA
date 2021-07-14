@@ -53,9 +53,7 @@ public class FairyTaleGUIController {
      */
     private void initializeTabs() throws IOException {
         tabBooks.getChildren().add(new FXMLLoader().load(getClass().getResource("BookGUI.fxml")));
-        //tabArticles.getChildren().add(new FXMLLoader().load(getClass().getResource("BookGUI.fxml")));
-        //tabCDs.getChildren().add(new FXMLLoader().load(getClass().getResource("BookGUI.fxml")));
-        //tabDVDs.getChildren().add(new FXMLLoader().load(getClass().getResource("BookGUI.fxml")));
+        tabArticles.getChildren().add(new FXMLLoader().load(getClass().getResource("ArticleGUI.fxml")));
     }
 
     @FXML void addItem(MouseEvent event) {

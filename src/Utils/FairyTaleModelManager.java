@@ -21,8 +21,7 @@ public class FairyTaleModelManager {
 
     public ArrayList<Item> getAllItems()
     {
-        ArrayList<Item> items = new ArrayList<Item>();
-        items = (ArrayList<Item>) myFileHandler.readObjectFromFile(objectFileName);
+        ArrayList<Item> items = (ArrayList<Item>) myFileHandler.readObjectFromFile(objectFileName);
         return items;
     }
 
@@ -105,8 +104,6 @@ public class FairyTaleModelManager {
         myFileHandler.writeObjectToFile(objectFileName,obj);
     }
 
-    public String remainderDueDate(){
-        return "";
-    }
+
 
 }

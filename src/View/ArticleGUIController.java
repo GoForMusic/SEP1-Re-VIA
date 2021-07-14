@@ -1,9 +1,6 @@
 package View;
 
-import Model.Book;
-import Model.Item;
-import Model.MyDate;
-import Model.Person;
+import Model.*;
 import Utils.FairyTaleModelManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -16,12 +13,12 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 
-public class BookGUIController {
-    @FXML private ListView<HBox> listBooks;
+public class ArticleGUIController {
+    @FXML private ListView<HBox> listArticle;
     @FXML private DialogPane dialogPop;
-    @FXML private TextField labelBookTitle;
-    @FXML private TextField labelBookAuthor;
-    @FXML private TextField labelBookISBN;
+    @FXML private TextField labelArticleTitle;
+    @FXML private TextField labelArticleAuthor;
+    @FXML private TextField labelArticleMagazine;
     @FXML private TextField customerFirstName;
     @FXML private TextField customerLastName;
     @FXML private TextField customerEmail;
@@ -45,18 +42,17 @@ public class BookGUIController {
     manager = new FairyTaleModelManager("items.bin","items.txt");
     items = manager.getAllItems();
     customerDate.setValue(LocalDate.now());
-    setListDetails(manager.getAllItemsBook());
+    setListDetails(manager.getAllItemsArticle());
 }
 
     private void setListDetails(ArrayList<Item> list)
     {
-        listBooks.getItems().clear();
-
+        listArticle.getItems().clear();
         for(Item item:list)
         {
             HBox hBox = new HBox();
             //add the item title and author as well the specific details
-            Label label = new Label(item.getTitle() + "|" + item.getAuthor()+"| ISBN: "+ item.getDetails());
+            Label label = new Label(item.getTitle() + "|" + item.getAuthor()+" | Magazine: "+ item.getDetails());
             label.setPrefWidth(500);
             hBox.getChildren().add(label);
             //add edit button
@@ -66,9 +62,9 @@ public class BookGUIController {
             //edit item button event handler using lambda method
             editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
                 dialogPop.setVisible(true);
-                labelBookTitle.setText(item.getTitle());
-                labelBookAuthor.setText(item.getAuthor());
-                labelBookISBN.setText(item.getDetails());
+                labelArticleTitle.setText(item.getTitle());
+                labelArticleAuthor.setText(item.getAuthor());
+                labelArticleMagazine.setText(item.getDetails());
                 itemIndex=items.indexOf(item);
                 //Populate the list with all the customers that are assigned to the specific item
                 refreshCustomerList(item);
@@ -80,18 +76,18 @@ public class BookGUIController {
             removeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent)->{
 
                 //Ask for a confirmation to delete the item, if the OK button was pressed the deletion process can start and save into file
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the book\n("+item.getTitle()+" by "+item.getAuthor()+") from the system?");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the article\n("+item.getTitle()+" by "+item.getAuthor()+") from the system?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if(result.get()== ButtonType.OK)
                 {
                     manager.removeItem(item);
-                    setListDetails(manager.getAllItemsBook());
+                    setListDetails(manager.getAllItemsArticle());
                 }
 
             });
             HBox.setMargin(editButton,new Insets(0,5,0,0));
             hBox.getChildren().addAll(editButton,removeButton);
-            listBooks.getItems().add(hBox);
+            listArticle.getItems().add(hBox);
         }
     }
 
@@ -151,7 +147,6 @@ public class BookGUIController {
             localItem.assignAPerson(localPerson);
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "The customer has been added to the item!");
             alert.showAndWait();
-            System.out.println(itemIndex);
             manager.editItem(localItem,itemIndex);
             refreshCustomerList(localItem);
         }
@@ -165,20 +160,20 @@ public class BookGUIController {
     @FXML
     void saveProcess(MouseEvent event) {
 
-        if(labelBookTitle.getText().isEmpty()&&labelBookAuthor.getText().isEmpty()&&labelBookISBN.getText().isEmpty()){
+        if(labelArticleTitle.getText().isEmpty()&&labelArticleAuthor.getText().isEmpty()&&labelArticleMagazine.getText().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR, "All fields must be filled!");
             alert.showAndWait();
         }else {
 
-            Item item = new Book(labelBookTitle.getText(), labelBookAuthor.getText(), labelBookISBN.getText());
+            Item item = new Article(labelArticleTitle.getText(), labelArticleAuthor.getText(), labelArticleMagazine.getText());
 
             //edit the object on the specific index who will be stored in the lambda function
-            manager.editItem(item, itemIndex);
+            manager.editItem(item,itemIndex);
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "The book new details has been saved!");
             alert.showAndWait();
             dialogPop.setVisible(false);
             //update the book list with the new changes
-            setListDetails(manager.getAllItemsBook());
+            setListDetails(manager.getAllItemsArticle());
             cancelProcess(event);
         }
     }

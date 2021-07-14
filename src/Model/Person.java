@@ -17,7 +17,7 @@ public class Person implements Serializable {
         this.email = email;
         this.type = type;
         this.typeOfAction = "";
-        this.returningDate = new MyDate();
+        this.returningDate = null;
     }
 
     public String getFirstName() {
