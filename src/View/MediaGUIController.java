@@ -1,6 +1,9 @@
 package View;
 
-import Model.*;
+import Model.Article;
+import Model.Item;
+import Model.MyDate;
+import Model.Person;
 import Utils.FairyTaleModelManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -13,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 
-public class ArticleGUIController {
-    @FXML private ListView<HBox> listArticle;
+public class MediaGUIController {
+    @FXML private ListView<HBox> listMedia;
     @FXML private DialogPane dialogPop;
     @FXML private TextField labelArticleTitle;
     @FXML private TextField labelArticleAuthor;
@@ -29,7 +32,6 @@ public class ArticleGUIController {
     @FXML private ListView<HBox> customersExceeded;
     @FXML private TextField searchTitle;
 
-
     private FairyTaleModelManager manager;
     private ArrayList<Item> items;
     private int itemIndex;
@@ -43,17 +45,17 @@ public class ArticleGUIController {
     manager = new FairyTaleModelManager("items.bin","items.txt");
     items = manager.getAllItems();
     customerDate.setValue(LocalDate.now());
-    setListDetails(manager.getAllItemsArticle());
+    setListDetails(manager.getAllItemsMedia());
 }
 
     private void setListDetails(ArrayList<Item> list)
     {
-        listArticle.getItems().clear();
+        listMedia.getItems().clear();
         for(Item item:list)
         {
             HBox hBox = new HBox();
             //add the item title and author as well the specific details
-            Label label = new Label("Title: "+item.getTitle() + " | Author: " + item.getAuthor()+" | Magazine: "+ item.getDetails());
+            Label label = new Label("Title: "+item.getTitle() + "| Author: " + item.getAuthor()+" | "+ item.getDetails());
             label.setPrefWidth(500);
             hBox.getChildren().add(label);
             //add edit button
@@ -77,18 +79,18 @@ public class ArticleGUIController {
             removeButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent)->{
 
                 //Ask for a confirmation to delete the item, if the OK button was pressed the deletion process can start and save into file
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the article\n("+item.getTitle()+" by "+item.getAuthor()+") from the system?");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete the media\n("+item.getTitle()+" by "+item.getAuthor()+") from the system?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if(result.get()== ButtonType.OK)
                 {
                     manager.removeItem(item);
-                    setListDetails(manager.getAllItemsArticle());
+                    setListDetails(manager.getAllItemsMedia());
                 }
 
             });
             HBox.setMargin(editButton,new Insets(0,5,0,0));
             hBox.getChildren().addAll(editButton,removeButton);
-            listArticle.getItems().add(hBox);
+            listMedia.getItems().add(hBox);
         }
     }
 
@@ -170,11 +172,11 @@ public class ArticleGUIController {
 
             //edit the object on the specific index who will be stored in the lambda function
             manager.editItem(item,itemIndex);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The book new details has been saved!");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The media new details has been saved!");
             alert.showAndWait();
             dialogPop.setVisible(false);
             //update the book list with the new changes
-            setListDetails(manager.getAllItemsArticle());
+            setListDetails(manager.getAllItemsMedia());
             cancelProcess(event);
         }
     }

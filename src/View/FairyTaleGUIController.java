@@ -13,8 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-import java.sql.Array;
-import java.util.ArrayList;
+
 
 public class FairyTaleGUIController {
     @FXML private DialogPane addItemPanel;
@@ -26,8 +25,7 @@ public class FairyTaleGUIController {
     @FXML private TextField typeOfItemTextFieldVariable;
     @FXML private AnchorPane tabBooks;
     @FXML private AnchorPane tabArticles;
-    @FXML private AnchorPane tabCDs;
-    @FXML private AnchorPane tabDVDs;
+    @FXML private AnchorPane tabMedia;
     @FXML private TextField itemTitle;
     @FXML private TextField itemAuthor;
 
@@ -54,6 +52,7 @@ public class FairyTaleGUIController {
     private void initializeTabs() throws IOException {
         tabBooks.getChildren().add(new FXMLLoader().load(getClass().getResource("BookGUI.fxml")));
         tabArticles.getChildren().add(new FXMLLoader().load(getClass().getResource("ArticleGUI.fxml")));
+        tabMedia.getChildren().add(new FXMLLoader().load(getClass().getResource("MediaGUI.fxml")));
     }
 
     @FXML void addItem(MouseEvent event) {

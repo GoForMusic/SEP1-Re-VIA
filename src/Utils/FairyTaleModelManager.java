@@ -63,13 +63,13 @@ public class FairyTaleModelManager {
         return finalArray;
     }
 
-    public ArrayList<Item> getAllItemsMedia(String type)
+    public ArrayList<Item> getAllItemsMedia()
     {
         ArrayList<Item> temp = getAllItems();
         ArrayList<Item> finalArray = new ArrayList<Item>();
         for(Item index: temp)
         {
-            if(index instanceof Media && ((Media) index).getType().equals(type))
+            if(index instanceof Media)
                 finalArray.add(index);
         }
         return finalArray;

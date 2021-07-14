@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="857.0" styleClass="tab-header-background" stylesheets="@Resources/dark-style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.BookGUIController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="857.0" styleClass="tab-header-background" stylesheets="@Resources/dark-style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MediaGUIController">
    <children>
-      <ListView fx:id="listBooks" layoutY="44.0" prefHeight="457.0" prefWidth="857.0" />
+      <ListView fx:id="listMedia" layoutY="44.0" prefHeight="457.0" prefWidth="857.0" />
       <DialogPane fx:id="dialogPop" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="564.0" prefWidth="857.0" visible="false">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" styleClass="tab-header-background" stylesheets="@Resources/dark-style.css">
@@ -28,14 +28,14 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label layoutX="35.0" layoutY="101.0" prefHeight="36.0" prefWidth="132.0" text="Book ISBN:" textFill="WHITE">
+                  <Label layoutX="35.0" layoutY="101.0" prefHeight="36.0" prefWidth="132.0" text="Magazine:" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="labelBookTitle" layoutX="136.0" layoutY="35.0" />
-                  <TextField fx:id="labelBookAuthor" layoutX="136.0" layoutY="71.0" />
-                  <TextField fx:id="labelBookISBN" layoutX="136.0" layoutY="107.0" />
+                  <TextField fx:id="labelArticleTitle" layoutX="136.0" layoutY="35.0" />
+                  <TextField fx:id="labelArticleAuthor" layoutX="136.0" layoutY="71.0" />
+                  <TextField fx:id="labelArticleMagazine" layoutX="136.0" layoutY="107.0" />
                   <Button layoutX="253.0" layoutY="463.0" mnemonicParsing="false" onMouseClicked="#saveProcess" styleClass="buttonGreen" stylesheets="@Resources/dark-style.css" text="Save changes" />
                   <Button layoutX="389.0" layoutY="463.0" mnemonicParsing="false" onMouseClicked="#cancelProcess" styleClass="buttonRed" stylesheets="@Resources/dark-style.css" text="Cancel" />
                   <ListView fx:id="customersAssign" layoutX="389.0" layoutY="231.0" prefHeight="214.0" prefWidth="435.0" />

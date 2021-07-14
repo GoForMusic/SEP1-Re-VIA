@@ -30,6 +30,7 @@ public class BookGUIController {
     @FXML private DatePicker customerDate;
     @FXML private ListView<HBox> customersAssign;
     @FXML private ListView<HBox> customersExceeded;
+    @FXML private TextField searchTitle;
 
 
     private FairyTaleModelManager manager;
@@ -56,7 +57,7 @@ public class BookGUIController {
         {
             HBox hBox = new HBox();
             //add the item title and author as well the specific details
-            Label label = new Label(item.getTitle() + "|" + item.getAuthor()+"| ISBN: "+ item.getDetails());
+            Label label = new Label("Title: "+item.getTitle() + " | Author: " + item.getAuthor()+"| ISBN: "+ item.getDetails());
             label.setPrefWidth(500);
             hBox.getChildren().add(label);
             //add edit button
@@ -182,5 +183,10 @@ public class BookGUIController {
             cancelProcess(event);
         }
     }
+
+    @FXML void searchItem(MouseEvent event){
+        setListDetails(manager.getAllItemsByTitle(searchTitle.getText()));
+    }
+
 
 }
