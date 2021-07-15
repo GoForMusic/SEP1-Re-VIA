@@ -43,7 +43,7 @@ public class BookGUIController {
     itemIndex=0;
     customerType.getItems().addAll("Student","Lecturer");
     customerTypeOfAction.getItems().addAll("Rent","Borrow");
-    manager = new FairyTaleModelManager("items.bin","items.txt");
+    manager = new FairyTaleModelManager("items.bin", "items.txt");
     customerDate.setValue(LocalDate.now());
     setListDetails(manager.getAllItemsBook());
 }

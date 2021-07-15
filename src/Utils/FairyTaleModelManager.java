@@ -5,6 +5,7 @@ import Model.Book;
 import Model.Item;
 import Model.Media;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class FairyTaleModelManager {
@@ -104,6 +105,50 @@ public class FairyTaleModelManager {
         myFileHandler.writeObjectToFile(objectFileName,obj);
     }
 
+    public void saveDataFromTxt() throws FileNotFoundException {
+        ArrayList<String> stringList = myFileHandler.readFromTextFile(textFileName);
 
+        ArrayList<Item> finalList = getAllItems();
+
+        for(String element:stringList)
+        {
+            String itemType = element.split("\\(")[0];
+            String itemTitle="";
+            String itemAuthor="";
+            switch (itemType)
+            {
+                case "Book":
+                    itemTitle = element.split("\\,")[0];
+                    itemTitle = itemTitle.substring(itemTitle.indexOf("Title:")+6);
+                    itemAuthor = element.split("\\,")[1];
+                    itemAuthor = itemAuthor.substring(itemAuthor.indexOf("Author:") +7);
+                    String ISBN = element.split("\\)")[0];
+                    ISBN = ISBN.substring(ISBN.indexOf("ISBN:")+5);
+                    finalList.add(new Book(itemTitle,itemAuthor,ISBN));
+                    continue;
+                case "Article":
+                    itemTitle = element.split("\\,")[0];
+                    itemTitle = itemTitle.substring(itemTitle.indexOf("Title:")+6);
+                    itemAuthor = element.split("\\,")[1];
+                    itemAuthor = itemAuthor.substring(itemAuthor.indexOf("Author:") +7);
+                    String magazine = element.split("\\)")[0];
+                    magazine = magazine.substring(magazine.indexOf("Magazine:")+9);
+                    finalList.add(new Article(itemTitle,itemAuthor,magazine));
+                    continue;
+                case "Media":
+                    itemTitle = element.split("\\,")[0];
+                    itemTitle = itemTitle.substring(itemTitle.indexOf("Title:")+6);
+                    itemAuthor = element.split("\\,")[1];
+                    itemAuthor = itemAuthor.substring(itemAuthor.indexOf("Author:") +7);
+                    String type = element.split("\\,")[2];
+                    type = type.substring(type.indexOf("type:")+5);
+                    String newItem = element.split("\\)")[0];
+                    newItem = newItem.substring(newItem.indexOf("newMedia:")+9);
+                    finalList.add(new Media(itemTitle,itemAuthor,type,newItem.equals("Yes")?true:false));
+                    continue;
+            }
+        }
+        saveItems(finalList);
+    }
 
 }

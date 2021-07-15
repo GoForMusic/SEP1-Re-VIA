@@ -8,7 +8,7 @@ public class InitialData {
     public static void main(String[] args)
     {
         Library library = new Library();
-        FairyTaleModelManager manager = new FairyTaleModelManager("items.bin","items.txt");
+        FairyTaleModelManager manager = new FairyTaleModelManager("items.bin", "items.txt");
 
         Item item1 = new Book("Morometii","Ion","12345");
         Item item1a = new Book("Morometii2","Ion","163e142");

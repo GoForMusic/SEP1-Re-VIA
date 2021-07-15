@@ -1,0 +1,3 @@
+Book(Title:Game Of Thrones, Author:George R.R. Martin, ISBN:1234)
+Article(Title:SDJ, Author:Unknown, Magazine:Danish Now!)
+Media(Title:Learn Danish, Author:Danish Gov, type:DVD, newMedia:No)

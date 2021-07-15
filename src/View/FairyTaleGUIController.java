@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
@@ -35,7 +36,7 @@ public class FairyTaleGUIController {
      * This method will initialize the data when the interface was open.
      * */
      public void initialize() throws IOException {
-         manager = new FairyTaleModelManager("items.bin","items.txt");
+         manager = new FairyTaleModelManager("items.bin", "items.txt");
          initializeTabs();
         mediaType.getItems().addAll("Book","Article","CD/DVD");
         mediaCDType.getItems().addAll("CD","DVD");
@@ -126,4 +127,11 @@ public class FairyTaleGUIController {
         }
 
     }
+
+    @FXML
+    private void uploadData(MouseEvent event) throws IOException {
+        manager.saveDataFromTxt();
+        initialize();
+    }
+
 }
