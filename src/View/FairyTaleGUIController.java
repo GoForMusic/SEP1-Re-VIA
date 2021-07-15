@@ -38,7 +38,7 @@ public class FairyTaleGUIController {
          manager = new FairyTaleModelManager("items.bin","items.txt");
          initializeTabs();
         mediaType.getItems().addAll("Book","Article","CD/DVD");
-        mediaCDType.getItems().addAll("CD","DV");
+        mediaCDType.getItems().addAll("CD","DVD");
         mediaCDType.getSelectionModel().selectFirst();
         mediaNewMedia.getItems().addAll("Yes","No");
         mediaNewMedia.getSelectionModel().selectFirst();
@@ -86,10 +86,7 @@ public class FairyTaleGUIController {
                Item item = new Article(itemTitle.getText(), itemAuthor.getText(), typeOfItemTextFieldVariable.getText());
                manager.saveItem(item);
            } else if (mediaType.getValue().equals("CD/DVD")) {
-               boolean localBool;
-               if (mediaNewMedia.getValue().equals("Yes")) localBool = true;
-               else localBool = false;
-               Item item = new Media(itemTitle.getText(), itemAuthor.getText(), mediaCDType.getValue(), localBool);
+               Item item = new Media(itemTitle.getText(), itemAuthor.getText(), mediaCDType.getValue(), mediaNewMedia.getValue().equals("Yes")?true:false);
                manager.saveItem(item);
            }
            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The item has been added!");

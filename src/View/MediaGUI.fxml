@@ -18,24 +18,23 @@
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" styleClass="tab-header-background" stylesheets="@Resources/dark-style.css">
                <children>
-                  <Label layoutX="35.0" layoutY="29.0" prefHeight="36.0" prefWidth="115.0" text="Book Title:" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="29.0" prefHeight="36.0" prefWidth="115.0" text="Media Title:" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label layoutX="35.0" layoutY="65.0" prefHeight="36.0" prefWidth="132.0" text="Book Author:" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="65.0" prefHeight="36.0" prefWidth="132.0" text="Media Author:" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Label layoutX="35.0" layoutY="101.0" prefHeight="36.0" prefWidth="132.0" text="Magazine:" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="101.0" prefHeight="36.0" prefWidth="132.0" text="Media type:" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="labelArticleTitle" layoutX="136.0" layoutY="35.0" />
-                  <TextField fx:id="labelArticleAuthor" layoutX="136.0" layoutY="71.0" />
-                  <TextField fx:id="labelArticleMagazine" layoutX="136.0" layoutY="107.0" />
+                  <TextField fx:id="labelMediaTitle" layoutX="136.0" layoutY="35.0" />
+                  <TextField fx:id="labelMediaAuthor" layoutX="136.0" layoutY="71.0" />
                   <Button layoutX="253.0" layoutY="463.0" mnemonicParsing="false" onMouseClicked="#saveProcess" styleClass="buttonGreen" stylesheets="@Resources/dark-style.css" text="Save changes" />
                   <Button layoutX="389.0" layoutY="463.0" mnemonicParsing="false" onMouseClicked="#cancelProcess" styleClass="buttonRed" stylesheets="@Resources/dark-style.css" text="Cancel" />
                   <ListView fx:id="customersAssign" layoutX="389.0" layoutY="231.0" prefHeight="214.0" prefWidth="435.0" />
@@ -87,6 +86,13 @@
                   <ComboBox fx:id="customerType" layoutX="729.0" layoutY="35.0" prefHeight="24.0" prefWidth="114.0" />
                   <ComboBox fx:id="customerTypeOfAction" layoutX="729.0" layoutY="71.0" prefHeight="24.0" prefWidth="114.0" />
                   <DatePicker fx:id="customerDate" layoutX="728.0" layoutY="107.0" prefHeight="24.0" prefWidth="115.0" />
+                  <ComboBox fx:id="labelMediaType" layoutX="136.0" layoutY="107.0" prefHeight="24.0" prefWidth="171.0" />
+                  <Label layoutX="14.0" layoutY="137.0" prefHeight="36.0" prefWidth="132.0" text="New media?" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="labelNewMedia" layoutX="136.0" layoutY="143.0" prefHeight="24.0" prefWidth="171.0" />
                </children>
             </AnchorPane>
           </content>

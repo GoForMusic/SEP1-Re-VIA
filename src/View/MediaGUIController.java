@@ -1,9 +1,6 @@
 package View;
 
-import Model.Article;
-import Model.Item;
-import Model.MyDate;
-import Model.Person;
+import Model.*;
 import Utils.FairyTaleModelManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -19,9 +16,10 @@ import java.util.Optional;
 public class MediaGUIController {
     @FXML private ListView<HBox> listMedia;
     @FXML private DialogPane dialogPop;
-    @FXML private TextField labelArticleTitle;
-    @FXML private TextField labelArticleAuthor;
-    @FXML private TextField labelArticleMagazine;
+    @FXML private TextField labelMediaTitle;
+    @FXML private TextField labelMediaAuthor;
+    @FXML private ComboBox<String> labelMediaType;
+    @FXML private ComboBox<String> labelNewMedia;
     @FXML private TextField customerFirstName;
     @FXML private TextField customerLastName;
     @FXML private TextField customerEmail;
@@ -39,17 +37,21 @@ public class MediaGUIController {
 
     public void initialize()
 {
+    labelMediaType.getItems().addAll("CD","DVD");
+    labelMediaType.getSelectionModel().selectFirst();
+    labelNewMedia.getItems().addAll("Yes","No");
+    labelNewMedia.getSelectionModel().selectFirst();
     itemIndex=0;
     customerType.getItems().addAll("Student","Lecturer");
     customerTypeOfAction.getItems().addAll("Rent","Borrow");
     manager = new FairyTaleModelManager("items.bin","items.txt");
-    items = manager.getAllItems();
     customerDate.setValue(LocalDate.now());
     setListDetails(manager.getAllItemsMedia());
 }
 
     private void setListDetails(ArrayList<Item> list)
     {
+        items = manager.getAllItems();
         listMedia.getItems().clear();
         for(Item item:list)
         {
@@ -65,12 +67,14 @@ public class MediaGUIController {
             //edit item button event handler using lambda method
             editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
                 dialogPop.setVisible(true);
-                labelArticleTitle.setText(item.getTitle());
-                labelArticleAuthor.setText(item.getAuthor());
-                labelArticleMagazine.setText(item.getDetails());
+                labelMediaTitle.setText(item.getTitle());
+                labelMediaAuthor.setText(item.getAuthor());
+                labelMediaType.setValue(((Media)item).getType());
+                labelNewMedia.setValue(((Media)item).isNewMedia()?"Yes":"No");
+                label.setText(item.getDetails());
                 itemIndex=items.indexOf(item);
                 //Populate the list with all the customers that are assigned to the specific item
-                refreshCustomerList(item);
+                refreshCustomerList(items.get(itemIndex));
             });
 
             Button removeButton = new Button("Remove");
@@ -99,7 +103,9 @@ public class MediaGUIController {
         customersAssign.getItems().clear();
         customersExceeded.getItems().clear();
 
-        for(Person person:item.getPersonList())
+        ArrayList<Person> localList = item.getPersonList();
+
+        for(Person person:localList)
         {
             customerGenerateList(person,item, customersAssign);
             if(person.getReturningDate().isBefore(MyDate.today()))
@@ -124,6 +130,7 @@ public class MediaGUIController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 item.removeAPerson(person);
+                manager.editItem(item,itemIndex);
                 refreshCustomerList(item);
             }
 
@@ -163,12 +170,12 @@ public class MediaGUIController {
     @FXML
     void saveProcess(MouseEvent event) {
 
-        if(labelArticleTitle.getText().isEmpty()&&labelArticleAuthor.getText().isEmpty()&&labelArticleMagazine.getText().isEmpty()){
+        if(labelMediaTitle.getText().isEmpty()&&labelMediaAuthor.getText().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR, "All fields must be filled!");
             alert.showAndWait();
         }else {
 
-            Item item = new Article(labelArticleTitle.getText(), labelArticleAuthor.getText(), labelArticleMagazine.getText());
+           Item item = new Media(labelMediaTitle.getText(), labelMediaAuthor.getText(),labelMediaType.getValue(),labelNewMedia.getValue().equals("Yes")?true:false);
 
             //edit the object on the specific index who will be stored in the lambda function
             manager.editItem(item,itemIndex);

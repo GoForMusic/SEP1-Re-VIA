@@ -44,13 +44,13 @@ public class BookGUIController {
     customerType.getItems().addAll("Student","Lecturer");
     customerTypeOfAction.getItems().addAll("Rent","Borrow");
     manager = new FairyTaleModelManager("items.bin","items.txt");
-    items = manager.getAllItems();
     customerDate.setValue(LocalDate.now());
     setListDetails(manager.getAllItemsBook());
 }
 
     private void setListDetails(ArrayList<Item> list)
     {
+        items = manager.getAllItems();
         listBooks.getItems().clear();
 
         for(Item item:list)
@@ -72,7 +72,7 @@ public class BookGUIController {
                 labelBookISBN.setText(item.getDetails());
                 itemIndex=items.indexOf(item);
                 //Populate the list with all the customers that are assigned to the specific item
-                refreshCustomerList(item);
+                refreshCustomerList(items.get(itemIndex));
             });
 
             Button removeButton = new Button("Remove");
@@ -101,7 +101,9 @@ public class BookGUIController {
         customersAssign.getItems().clear();
         customersExceeded.getItems().clear();
 
-        for(Person person:item.getPersonList())
+        ArrayList<Person> localList = item.getPersonList();
+
+        for(Person person:localList)
         {
             customerGenerateList(person,item, customersAssign);
             if(person.getReturningDate().isBefore(MyDate.today()))
@@ -126,6 +128,7 @@ public class BookGUIController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 item.removeAPerson(person);
+                manager.editItem(item,itemIndex);
                 refreshCustomerList(item);
             }
 
@@ -152,7 +155,6 @@ public class BookGUIController {
             localItem.assignAPerson(localPerson);
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "The customer has been added to the item!");
             alert.showAndWait();
-            System.out.println(itemIndex);
             manager.editItem(localItem,itemIndex);
             refreshCustomerList(localItem);
         }
