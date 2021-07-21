@@ -7,7 +7,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
+/**
+ * A class that will start the GUI
+ * @author Adrian Militaru, Adrian Pompierescu, Gabriel Moutinho Tristan, Freja Hansen
+ * @version 1.0
+ */
 public class FairyTaleApp extends Application {
     /**
      * An abstract method which automatically calls the launch

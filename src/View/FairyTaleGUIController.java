@@ -12,10 +12,13 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-
+/**
+ * A class that will be used as a controller for GUI
+ * @author Adrian Militaru, Adrian Pompierescu, Gabriel Moutinho Tristan, Freja Hansen
+ * @version 1.0
+ */
 public class FairyTaleGUIController {
     @FXML private DialogPane addItemPanel;
     @FXML private Label typeOfItemLabelVarialbe;
@@ -56,12 +59,17 @@ public class FairyTaleGUIController {
         tabMedia.getChildren().add(new FXMLLoader().load(getClass().getResource("MediaGUI.fxml")));
     }
 
+    /**
+     * A method that will show-up the add item view in the GUI
+     */
     @FXML void addItem(MouseEvent event) {
         addItemPanel.setVisible(true);
     }
 
-    @FXML
-    void cancelNewItemProcess(MouseEvent event) {
+    /**
+     * A method that will close the add item view in the GUI and reset all the fields
+     */
+    @FXML void cancelNewItemProcess(MouseEvent event) {
         addItemPanel.setVisible(false);
         mediaType.getSelectionModel().selectFirst();
         mediaCDType.getSelectionModel().selectFirst();
@@ -71,8 +79,10 @@ public class FairyTaleGUIController {
         typeOfItemTextFieldVariable.setText("");
     }
 
-    @FXML
-    void storeNewItem(MouseEvent event) throws IOException {
+    /**
+     * A method that will save the new item into the system
+     */
+    @FXML void storeNewItem(MouseEvent event) throws IOException {
 
        if(itemTitle.getText().isEmpty()&&itemAuthor.getText().isEmpty()){
            Alert alert = new Alert(Alert.AlertType.ERROR, "All fields must be filled!");
@@ -97,8 +107,10 @@ public class FairyTaleGUIController {
        }
     }
 
-    @FXML
-    private void comboAction(ActionEvent event) {
+    /**
+     * A method that will set-up some specific fields base on the type of Item
+     */
+    @FXML private void comboAction(ActionEvent event) {
 
         if(mediaType.getValue().equals("Book"))
         {
@@ -128,8 +140,10 @@ public class FairyTaleGUIController {
 
     }
 
-    @FXML
-    private void uploadData(MouseEvent event) throws IOException {
+    /**
+     * A method that will import all the data from the txt file and stored in the binary file
+     */
+    @FXML private void uploadData(MouseEvent event) throws IOException {
         manager.saveDataFromTxt();
         initialize();
     }

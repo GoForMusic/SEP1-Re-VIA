@@ -12,7 +12,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
-
+/**
+ * A class that will be used as a controller for GUI
+ * @author Adrian Militaru, Adrian Pompierescu, Gabriel Moutinho Tristan, Freja Hansen
+ * @version 1.0
+ */
 public class MediaGUIController {
     @FXML private ListView<HBox> listMedia;
     @FXML private DialogPane dialogPop;
@@ -35,8 +39,11 @@ public class MediaGUIController {
     private int itemIndex;
 
 
+    /**
+     * A method that will initialize all the date when the page will be loaded
+     */
     public void initialize()
-{
+    {
     labelMediaType.getItems().addAll("CD","DVD");
     labelMediaType.getSelectionModel().selectFirst();
     labelNewMedia.getItems().addAll("Yes","No");
@@ -47,8 +54,12 @@ public class MediaGUIController {
     manager = new FairyTaleModelManager("items.bin", "items.txt");
     customerDate.setValue(LocalDate.now());
     setListDetails(manager.getAllItemsMedia());
-}
+    }
 
+    /**
+     * A method that will prepare the list view with all the Media items
+     * @param list the list of items
+     */
     private void setListDetails(ArrayList<Item> list)
     {
         items = manager.getAllItems();
@@ -98,6 +109,10 @@ public class MediaGUIController {
         }
     }
 
+    /**
+     * A method that will prepare the list of customer for a specific item
+     * @param item the specific item
+     */
     private void refreshCustomerList(Item item)
     {
         customersAssign.getItems().clear();
@@ -113,6 +128,12 @@ public class MediaGUIController {
         }
     }
 
+    /**
+     * A method that will set-up a list with all the customers assigned to the item and a second list with specific customer where the returning date has exceeded
+     * @param person the person details
+     * @param item the item object where the customer is assigned
+     * @param customerList reference to the specific view list
+     */
     private void customerGenerateList(Person person,Item item, ListView<HBox>  customerList)
     {
         HBox hBox = new HBox();
@@ -143,8 +164,10 @@ public class MediaGUIController {
 
     }
 
-    @FXML
-    void assignCustomer(MouseEvent event) {
+    /**
+     * A method that will assign a customer to the item
+     */
+    @FXML void assignCustomer(MouseEvent event) {
         if(customerEmail.getText().isEmpty()&&customerFirstName.getText().isEmpty()&&customerLastName.getText().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR, "All fields must be filled!");
             alert.showAndWait();
@@ -162,13 +185,17 @@ public class MediaGUIController {
         }
     }
 
-    @FXML
-    void cancelProcess(MouseEvent event) {
+    /**
+     * A method that will close the view of set new details for an item
+     */
+    @FXML void cancelProcess(MouseEvent event) {
         dialogPop.setVisible(false);
     }
 
-    @FXML
-    void saveProcess(MouseEvent event) {
+    /**
+     * A method that will save all the new data for an item on binary file
+     */
+    @FXML void saveProcess(MouseEvent event) {
 
         if(labelMediaTitle.getText().isEmpty()&&labelMediaAuthor.getText().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR, "All fields must be filled!");
@@ -188,6 +215,9 @@ public class MediaGUIController {
         }
     }
 
+    /**
+     * A method that will generate a new list of items bases on the title
+     */
     @FXML void searchItem(MouseEvent event){
         setListDetails(manager.getAllItemsByTitle(searchTitle.getText()));
     }

@@ -3,8 +3,16 @@ package Main;
 import Model.*;
 import Utils.FairyTaleModelManager;
 
+/**
+ * Class used to populate the data first time
+ * @author Adrian Militaru, Adrian Pompierescu, Gabriel Moutinho Tristan, Freja Hansen
+ * @version 1.0
+ */
 public class InitialData {
 
+    /**
+     * A static method that will populate a list of items and save to the binary file
+     */
     public static void main(String[] args)
     {
         Library library = new Library();

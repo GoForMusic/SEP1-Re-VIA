@@ -8,11 +8,21 @@ import Model.Media;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+/**
+ * A class that include all the function to read and write from the txt and bin file
+ * @author Adrian Militaru, Adrian Pompierescu, Gabriel Moutinho Tristan, Freja Hansen
+ * @version 1.0
+ */
 public class FairyTaleModelManager {
     private String objectFileName;
     private String textFileName;
     private MyFileHandler myFileHandler;
 
+    /**
+     * A 2-argument constructor
+     * @param objectFileName the binary filename
+     * @param textFileName the text filename
+     */
     public FairyTaleModelManager(String objectFileName, String textFileName)
     {
         this.objectFileName=objectFileName;
@@ -20,12 +30,21 @@ public class FairyTaleModelManager {
         this.myFileHandler=new MyFileHandler();
     }
 
+    /**
+     * A method that will return from binary file a list of Items
+     * @return a list of items
+     */
     public ArrayList<Item> getAllItems()
     {
         ArrayList<Item> items = (ArrayList<Item>) myFileHandler.readObjectFromFile(objectFileName);
         return items;
     }
 
+    /**
+     * A method that will return from binary file a list of items base on the title
+     * @param title the title that will be used for search
+     * @return a list of items base on the specific title
+     */
     public ArrayList<Item> getAllItemsByTitle(String title)
     {
         ArrayList<Item> temp = getAllItems();
@@ -39,7 +58,10 @@ public class FairyTaleModelManager {
         return finalArray;
     }
 
-
+    /**
+     * A get method that will return all the book items
+     * @return a list of book items
+     */
     public ArrayList<Item> getAllItemsBook()
     {
         ArrayList<Item> temp = getAllItems();
@@ -52,6 +74,10 @@ public class FairyTaleModelManager {
         return finalArray;
     }
 
+    /**
+     * A get method that will return all the article items
+     * @return a list of article items
+     */
     public ArrayList<Item> getAllItemsArticle()
     {
         ArrayList<Item> temp = getAllItems();
@@ -64,6 +90,10 @@ public class FairyTaleModelManager {
         return finalArray;
     }
 
+    /**
+     * A get method that will return all the media items
+     * @return a list of media items
+     */
     public ArrayList<Item> getAllItemsMedia()
     {
         ArrayList<Item> temp = getAllItems();
@@ -76,6 +106,11 @@ public class FairyTaleModelManager {
         return finalArray;
     }
 
+    /**
+     * A method that will edit an Item and save into the binary file
+     * @param obj the new item
+     * @param index the index in the list
+     */
     public void editItem(Item obj, int index)
     {
         ArrayList<Item> items = getAllItems();
@@ -83,6 +118,10 @@ public class FairyTaleModelManager {
         myFileHandler.writeObjectToFile(objectFileName,items);
     }
 
+    /**
+     * A method that will remove an Item and save into binary file
+     * @param obj the specific item
+     */
     public void removeItem(Item obj)
     {
         ArrayList<Item> items = getAllItems();
@@ -93,6 +132,10 @@ public class FairyTaleModelManager {
         myFileHandler.writeObjectToFile(objectFileName,items);
     }
 
+    /**
+     * A method that will save an object to binary file
+     * @param obj the item
+     */
     public void saveItem(Item obj)
     {
         ArrayList<Item> items = getAllItems();
@@ -100,11 +143,19 @@ public class FairyTaleModelManager {
         myFileHandler.writeObjectToFile(objectFileName,items);
     }
 
+    /**
+     * A method that will save the list of items to binary file
+     * @param obj the list of items
+     */
     public void saveItems(ArrayList<Item> obj)
     {
         myFileHandler.writeObjectToFile(objectFileName,obj);
     }
 
+    /**
+     * A method that will read data from txt file and will save in binary file
+     * @throws FileNotFoundException an exception will be trow if he can see the file
+     */
     public void saveDataFromTxt() throws FileNotFoundException {
         ArrayList<String> stringList = myFileHandler.readFromTextFile(textFileName);
 

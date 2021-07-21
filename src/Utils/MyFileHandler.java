@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Class used for writing and reading binary files and writing a text file (to export the XML file format)
+ * Class used for writing and reading binary files and read from a text file
  * @author Adrian Militaru, Adrian Pompierescu, Gabriel Moutinho Tristan, Freja Hansen
  * @version 1.0
  */
@@ -94,6 +94,12 @@ public class MyFileHandler
         return obj;
     }
 
+    /**
+     * A method that will read from a text file
+     * @param fileName the name of the file
+     * @return return a list with all the lines from text file
+     * @throws FileNotFoundException an exception will be trow if he can see the file
+     */
     public ArrayList<String> readFromTextFile(String fileName)
             throws FileNotFoundException
     {
