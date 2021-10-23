@@ -11,6 +11,7 @@ import javafx.application.Application;
  */
 public class Main
 {
+    //teszt
     public static void main(String[] args)
     {
         Application.launch(FairyTaleApp.class, args);
